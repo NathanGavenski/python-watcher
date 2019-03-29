@@ -15,18 +15,17 @@ class MyHandler(FileSystemEventHandler):
 
 if __name__ == "__main__":
     params = {}
-    logging.basicConfig(level=logging.INFO,
-                        format='%(asctime)s - %(message)s',
-                        datefmt='%Y-%m-%d %H:%M:%S')
 
     for index, value in enumerate(sys.argv):
         if  index % 2 > 0 and value[0] == '-':
             params[value] = sys.argv[index + 1]
 
+    os.system('clear')
+    print('Watching over {type}/{file}'.format(type=params['-d'], file=params['-f']))
     path = params['-d']
     event_handler = MyHandler(params)
     observer = Observer()
-    observer.schedule(event_handler, path='.', recursive=False)
+    observer.schedule(event_handler, path=params['-d'], recursive=False)
     observer.start()
 
     try:

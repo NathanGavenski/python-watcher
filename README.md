@@ -8,3 +8,8 @@ This is a watcher to rerun scripts after you change them
   ```
   python watcher -d . -f watcher.py  
   ```
+
+## For dependencies all you need to do is run
+```
+pip install -r requeirements.txt
+```
