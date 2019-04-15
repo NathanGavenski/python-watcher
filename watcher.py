@@ -25,7 +25,7 @@ if __name__ == "__main__":
     path = params['-d']
     event_handler = MyHandler(params)
     observer = Observer()
-    observer.schedule(event_handler, path=params['-d'], recursive=False)
+    observer.schedule(event_handler, path=params['-d'], recursive=True)
     observer.start()
 
     try:
