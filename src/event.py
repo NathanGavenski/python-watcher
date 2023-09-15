@@ -1,3 +1,4 @@
+"""Module for EventHandler (deals with event from watchdog)."""
 from argparse import Namespace
 import time
 import os
@@ -5,8 +6,10 @@ import os
 from watchdog.events import FileSystemEventHandler, FileSystemEvent
 
 
-# TODO event from VS Code and vim are different, one picks up the path the other no
+# TODO event from VS Code and vim are different
 class EventHandler(FileSystemEventHandler):
+    """Class for handling file system modification events."""
+
     def __init__(self, params: Namespace) -> None:
         self.params = params
         self.last_trigger = time.time()
@@ -49,7 +52,7 @@ class EventHandler(FileSystemEventHandler):
             return "pytest"
         return "python"
 
-    def get_executable(self, dir: str, file_to_execute: str) -> str:
+    def get_executable(self, directory: str, file_to_execute: str) -> str:
         """Builds string to execute.
 
         Args:
@@ -60,7 +63,7 @@ class EventHandler(FileSystemEventHandler):
             executable (str): complete command to execute.
         """
         executable = ""
-        if dir is not None:
-            executable += f"{dir}/"
+        if directory is not None:
+            executable += f"{directory}/"
         executable += file_to_execute
         return executable

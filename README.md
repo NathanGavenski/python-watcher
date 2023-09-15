@@ -1,7 +1,6 @@
 # python-watcher
 I've crated this project to watch over a repo dir and execute a file after modifying anything on that same dir. 
 Its lightweight since it only has watchdog as a dependency. 
-Perhaps in the future, I might implement a setup so we can execute direct from the command line.
 
 ## To run this watcher you will need to inform two parameters:
 ```
@@ -23,6 +22,15 @@ python -m watcher -d . -f watcher.py
 ```
 pip install -e .
 ```
+
+## Use cases
+Although trivial, there are some uses cases that made me create this package:
+
+* Run pytest when saving a file.
+* Run pylint when making corrections.
+* Run smaller scripts after every modification.
+
+Mostly I was tired off having to tab out from vim just to run pytest/pylint/python on the terminal.
 
 ## Todo
 - [x] create a proper setup

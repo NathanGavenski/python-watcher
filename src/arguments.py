@@ -1,7 +1,9 @@
+"""Module for arguments when calling watcher."""
 from argparse import ArgumentParser, Namespace
 
 
 def get_args() -> Namespace:
+    """Function for getting command line arguments."""
     parser = ArgumentParser(description="Arguments for watching over a file")
 
     parser.add_argument(
