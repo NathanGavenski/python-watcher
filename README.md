@@ -2,7 +2,7 @@
 I've crated this project to watch over a repo dir and execute a file after modifying anything on that same dir. 
 Its lightweight since it only has watchdog as a dependency. 
 
-## To run this watcher you will need to inform two parameters:
+## Parameters for running
 ```
 -d or --dir (required): 
     Folder you want the watcher to look for changes. Defaults to "."
@@ -14,9 +14,17 @@ Its lightweight since it only has watchdog as a dependency.
     If the watcher should run a pytest command instead of python. Defaults to False.
 ```
 
+## To run
+
+Watching and executing a python script:
 ```bash
 python -m watcher -d . -f watcher.py  
 ```
+Watching and executing pytest
+```
+python -m watcher --test
+```
+
 
 ## For dependencies all you need to do is run
 ```
