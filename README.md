@@ -11,6 +11,8 @@ Perhaps in the future, I might implement a setup so we can execute direct from t
     Script that you want to run after a file is changed (probably you main.py or something similar)
 -t or --time (optional):
     Time delay to run again (good when saving constantly)
+--test (optional):
+    If the watcher should run a pytest command instead of python
 ```
 
 ```bash
