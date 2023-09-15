@@ -54,3 +54,4 @@ Mostly I was tired off having to tab out from vim just to run pytest/pylint/pyth
 - [ ] Create documentation
 - [x] Create tests
 - [ ] Publish
+- [ ] Fix pytest not working on GitHub actions

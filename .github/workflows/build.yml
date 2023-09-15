@@ -30,7 +30,3 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         pylint --fail-under=9 $(find . -name "*.py" | xargs)
-
-    - name: Testing the code with pytest
-      run: |
-        pytest

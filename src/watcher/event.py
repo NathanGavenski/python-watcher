@@ -5,6 +5,7 @@ import os
 
 from watchdog.events import FileSystemEventHandler, FileSystemEvent
 
+
 # FIXME it should not trigger on github modifications (at least not on .git folder)
 # TODO event from VS Code and vim are different
 class EventHandler(FileSystemEventHandler):
