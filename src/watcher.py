@@ -1,10 +1,11 @@
+"""File for watcher specific functions."""
 from argparse import Namespace
 import os
 
 from watchdog.observers import Observer
 
-from .arguments import get_args
-from .event import EventHandler
+from arguments import get_args
+from event import EventHandler
 
 
 def setup_observer(params: Namespace, handler: EventHandler) -> Observer:

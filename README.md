@@ -16,16 +16,16 @@ Perhaps in the future, I might implement a setup so we can execute direct from t
 ```
 
 ```bash
-python <path_to_python-watcher_dir>/watcher.py -d . -f watcher.py  
+python -m watcher -d . -f watcher.py  
 ```
 
 ## For dependencies all you need to do is run
 ```
-pip install -r requeirements.txt
+pip install -e .
 ```
 
 ## Todo
-- [ ] create a proper setup
+- [x] create a proper setup
 - [ ] make it executable from command line
 - [ ] be able to pass parameters
 - [ ] read parameters from yaml file
