@@ -3,7 +3,7 @@ name: Pylint and Pytest
 on:
   push:
     branches: 
-      main
+      master 
 
 jobs:
   build:
