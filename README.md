@@ -32,6 +32,7 @@ pip install -r requeirements.txt
 - [ ] run pylint
     - [ ] to run pylint there has to be a folder to run pylint over
     - [ ] fail with some threshold
+- [ ] Spawn a new process to close if needed (more control over running process)
 - [ ] Create documentation
-- [ ] Create tests
+- [x] Create tests
 - [ ] Publish

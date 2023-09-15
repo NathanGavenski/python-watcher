@@ -1,4 +1,3 @@
-from ast import literal_eval
 from argparse import ArgumentParser, Namespace
 
 
@@ -9,6 +8,7 @@ def get_args() -> Namespace:
         '-d',
         '--dir',
         type=str,
+        default=None,
         help='Directory to observe'
     )
     parser.add_argument(
@@ -31,6 +31,6 @@ def get_args() -> Namespace:
     )
 
     params = parser.parse_args()
-    params.dir = params.dir if literal_eval(params.dir) is not None else None
+    params.dir = params.dir if params.dir != "None" else None
 
     return params
