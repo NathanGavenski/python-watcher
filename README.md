@@ -11,23 +11,40 @@ Its lightweight since it only has watchdog as a dependency.
 -t or --time (optional):
     Time delay to run again (good when saving constantly). Defaults to 1.
 --test (optional):
-    If the watcher should run a pytest command instead of python. Defaults to False.
+    If the watcher should run pytest command instead of python. Defaults to False.
+--lint (optional):
+    If the watcher should run pylint command instead of python. Defaults to False.
 ```
 
 ## To run
 
 Watching and executing a python script:
-```bash
-watcher -d . -f watcher.py  
-```
-Watching and executing pytest
-```
-watcher --test
-```
 
+```bash
+# watch changes in the directory "." and execute watcher.py
+watcher -d . -f watcher.py
+
+# watch changes only in the file watcher.py
+watcher -f watcher.py
+
+# watching and executing pytest
+watcher --test
+
+# watching and executing pylint only for "src" directory
+watcher --lint --lint_src src
+```
 
 ## For dependencies all you need to do is run
+
+Install from `PyPi`
 ```
+pip install watcher-cli
+```
+
+Or from source:
+```
+git clone https://github.com/NathanGavenski/python-watcher
+cd python-watcher
 pip install -e .
 ```
 
