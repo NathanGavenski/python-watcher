@@ -18,11 +18,11 @@ Its lightweight since it only has watchdog as a dependency.
 
 Watching and executing a python script:
 ```bash
-python -m watcher -d . -f watcher.py  
+watcher -d . -f watcher.py  
 ```
 Watching and executing pytest
 ```
-python -m watcher --test
+watcher --test
 ```
 
 
