@@ -11,23 +11,40 @@ Its lightweight since it only has watchdog as a dependency.
 -t or --time (optional):
     Time delay to run again (good when saving constantly). Defaults to 1.
 --test (optional):
-    If the watcher should run a pytest command instead of python. Defaults to False.
+    If the watcher should run pytest command instead of python. Defaults to False.
+--lint (optional):
+    If the watcher should run pylint command instead of python. Defaults to False.
 ```
 
 ## To run
 
 Watching and executing a python script:
-```bash
-watcher -d . -f watcher.py  
-```
-Watching and executing pytest
-```
-watcher --test
-```
 
+```bash
+# watch changes in the directory "." and execute watcher.py
+watcher -d . -f watcher.py
+
+# watch changes only in the file watcher.py
+watcher -f watcher.py
+
+# watching and executing pytest
+watcher --test
+
+# watching and executing pylint only for "src" directory
+watcher --lint --lint_src src
+```
 
 ## For dependencies all you need to do is run
+
+Install from `PyPi`
 ```
+pip install watcher-cli
+```
+
+Or from source:
+```
+git clone https://github.com/NathanGavenski/python-watcher
+cd python-watcher
 pip install -e .
 ```
 
@@ -47,8 +64,8 @@ Mostly I was tired off having to tab out from vim just to run pytest/pylint/pyth
 - [ ] read parameters from yaml file
 - [x] only watch a single file changes
 - [x] run pytest
-- [ ] run pylint
-    - [ ] to run pylint there has to be a folder to run pylint over
+- [x] run pylint
+    - [x] to run pylint there has to be a folder to run pylint over
     - [ ] fail with some threshold
 - [ ] Spawn a new process to close if needed (more control over running process)
 - [ ] Create documentation
