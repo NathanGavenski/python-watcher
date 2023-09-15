@@ -34,7 +34,7 @@ Mostly I was tired off having to tab out from vim just to run pytest/pylint/pyth
 
 ## Todo
 - [x] create a proper setup
-- [ ] make it executable from command line
+- [x] make it executable from command line
 - [ ] be able to pass parameters
 - [ ] read parameters from yaml file
 - [x] only watch a single file changes

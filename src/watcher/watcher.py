@@ -4,8 +4,8 @@ import os
 
 from watchdog.observers import Observer
 
-from arguments import get_args
-from event import EventHandler
+from watcher.arguments import get_args
+from watcher.event import EventHandler
 
 
 def setup_observer(params: Namespace, handler: EventHandler) -> Observer:
@@ -44,7 +44,3 @@ def main() -> None:
         observer.stop()
     finally:
         observer.join()
-
-
-if __name__ == "__main__":
-    main()

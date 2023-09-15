@@ -4,8 +4,8 @@ from unittest import TestCase, mock
 
 from watchdog.observers import Observer
 
-from src.event import EventHandler
-from src.watcher import setup_observer
+from src.watcher.event import EventHandler
+from src.watcher.watcher import setup_observer
 
 
 class TestWatcher(TestCase):

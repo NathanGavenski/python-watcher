@@ -3,7 +3,7 @@ from typing import Any, List
 from unittest import TestCase, mock
 
 
-from src.event import EventHandler
+from src.watcher.event import EventHandler
 
 
 class TestWatcher(TestCase):

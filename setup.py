@@ -25,4 +25,9 @@ setup(
         "dev": ["pytest>=7.0", "twine>=4.0.2", "pylint>=2.17"],
     },
     python_requires=">=3.10",
+    entry_points={
+        'console_scripts': [
+            'watcher=watcher:main'
+        ]
+    },
 )
