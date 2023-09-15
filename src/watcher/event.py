@@ -5,7 +5,7 @@ import os
 
 from watchdog.events import FileSystemEventHandler, FileSystemEvent
 
-
+# FIXME it should not trigger on github modifications (at least not on .git folder)
 # TODO event from VS Code and vim are different
 class EventHandler(FileSystemEventHandler):
     """Class for handling file system modification events."""
@@ -13,9 +13,14 @@ class EventHandler(FileSystemEventHandler):
     def __init__(self, params: Namespace) -> None:
         self.params = params
         self.last_trigger = time.time()
-        self.command = self.get_command(params.test)
-        self.executable = self.get_executable(params.dir, params.file)
-        self.runner = self.get_runner(params.test, params.file)
+        self.command = self.get_command(params.test, params.lint)
+        self.runner = self.get_runner(params.test, params.lint, params.file)
+        self.executable = self.get_executable(
+            params.dir,
+            params.file,
+            params.lint,
+            params.lint_src
+        )
 
     def on_modified(self, event: FileSystemEvent) -> None:
         """Execute every modification event.
@@ -40,37 +45,53 @@ class EventHandler(FileSystemEventHandler):
         delta = time.time() - self.last_trigger
         return delta > self.params.time
 
-    def get_runner(self, test: bool, file_to_execute: str) -> str:
+    def get_runner(self, test: bool, lint: bool, file_to_execute: str) -> str:
         """Which name should be displayed when running.
 
         Args:
             test (bool): if it should run pytest.
+            lint (bool): if it should run pylint.
             file_to_execute (str): name of the file to execute.
 
         Returns:
             runner (str): name to display.
         """
-        return "pytest" if test else file_to_execute
+        if test:
+            return "pytest"
+        if lint:
+            return "pylint"
+        return file_to_execute
 
-    def get_command(self, test: bool) -> str:
+    def get_command(self, test: bool, lint: bool) -> str:
         """Selects which command it should run.
 
         Args:
             test (bool): if it should run pytest.
+            lint (bool): if it should run pylint.
 
         Return:
             command (str): which command it should run.
         """
         if test:
             return "pytest"
+        if lint:
+            return "pylint"
         return "python"
 
-    def get_executable(self, directory: str, file_to_execute: str) -> str:
+    def get_executable(
+        self,
+        directory: str,
+        file_to_execute: str,
+        lint: bool,
+        lint_src: str
+    ) -> str:
         """Builds string to execute.
 
         Args:
-            dir (str): the directory it is looking
+            directory (str): the directory it is looking
             file_to_execute (str): file that it should run.
+            lint (bool): if it should run pylint.
+            lint_src (str): where the lint should be run.
 
         Returns:
             executable (str): complete command to execute.
@@ -80,4 +101,6 @@ class EventHandler(FileSystemEventHandler):
             executable += f"{directory}/"
         if file_to_execute is not None:
             executable += file_to_execute
+        if lint:
+            return lint_src
         return executable

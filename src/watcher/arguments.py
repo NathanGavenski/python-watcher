@@ -31,6 +31,17 @@ def get_args() -> Namespace:
         action='store_true',
         help='whether watcher should run pytest'
     )
+    parser.add_argument(
+        '--lint',
+        action='store_true',
+        help='whether watcher should run pylint'
+    )
+    parser.add_argument(
+        '--lint_src',
+        type=str,
+        default='src',
+        help='where to run pylint'
+    )
 
     params = parser.parse_args()
     params.dir = params.dir if params.dir != "None" else None

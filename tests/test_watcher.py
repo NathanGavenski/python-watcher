@@ -1,3 +1,4 @@
+"""Module for testing watcher functions."""
 from argparse import Namespace
 from typing import Any, List
 from unittest import TestCase, mock
@@ -20,12 +21,15 @@ class TestWatcher(TestCase):
         self.params = params
 
     def get_handlers(self, observer: Observer) -> List[Any]:
+        """Get handlers from observer."""
         return list(list(observer._handlers.values())[0])
 
     def get_watches(self, observer) -> Any:
+        """Get watchers from observer."""
         return observer._watches.pop()
 
     def test_setup_observer(self) -> None:
+        """Test setup of the observer."""
         event = EventHandler(self.params)
         observer = setup_observer(self.params, event)
 
