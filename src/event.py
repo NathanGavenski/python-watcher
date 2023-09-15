@@ -15,6 +15,7 @@ class EventHandler(FileSystemEventHandler):
         self.last_trigger = time.time()
         self.command = self.get_command(params.test)
         self.executable = self.get_executable(params.dir, params.file)
+        self.runner = self.get_runner(params.test, params.file)
 
     def on_modified(self, event: FileSystemEvent) -> None:
         """Execute every modification event.
@@ -26,7 +27,7 @@ class EventHandler(FileSystemEventHandler):
             os.system('clear')
             print(f'Event type: {str(event.event_type).upper()}')
             print(f'Path : {event.src_path}')
-            print(f'Running {self.params.file}...')
+            print(f'Running {self.runner}...')
             os.system(f'{self.command} {self.executable}')
             self.last_trigger = time.time()
 
@@ -38,6 +39,18 @@ class EventHandler(FileSystemEventHandler):
         """
         delta = time.time() - self.last_trigger
         return delta > self.params.time
+
+    def get_runner(self, test: bool, file_to_execute: str) -> str:
+        """Which name should be displayed when running.
+
+        Args:
+            test (bool): if it should run pytest.
+            file_to_execute (str): name of the file to execute.
+
+        Returns:
+            runner (str): name to display.
+        """
+        return "pytest" if test else file_to_execute
 
     def get_command(self, test: bool) -> str:
         """Selects which command it should run.
@@ -65,5 +78,6 @@ class EventHandler(FileSystemEventHandler):
         executable = ""
         if directory is not None:
             executable += f"{directory}/"
-        executable += file_to_execute
+        if file_to_execute is not None:
+            executable += file_to_execute
         return executable

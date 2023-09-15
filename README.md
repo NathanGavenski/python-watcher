@@ -5,13 +5,13 @@ Its lightweight since it only has watchdog as a dependency.
 ## To run this watcher you will need to inform two parameters:
 ```
 -d or --dir (required): 
-    Folder you want the watcher to look for changes
+    Folder you want the watcher to look for changes. Defaults to "."
 -f or --file (required): 
     Script that you want to run after a file is changed (probably you main.py or something similar)
 -t or --time (optional):
-    Time delay to run again (good when saving constantly)
+    Time delay to run again (good when saving constantly). Defaults to 1.
 --test (optional):
-    If the watcher should run a pytest command instead of python
+    If the watcher should run a pytest command instead of python. Defaults to False.
 ```
 
 ```bash

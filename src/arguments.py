@@ -10,7 +10,7 @@ def get_args() -> Namespace:
         '-d',
         '--dir',
         type=str,
-        default=None,
+        default='.',
         help='Directory to observe'
     )
     parser.add_argument(

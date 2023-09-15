@@ -31,7 +31,7 @@ def main() -> None:
     os.system('clear')
     if params.dir is not None:
         print(f'Watching: {params.dir}')
-    print(f'Executing: {params.file}')
+    print(f'Executing: {params.file if not params.test else "pytest"}')
 
     event_handler = EventHandler(params)
     observer = setup_observer(params, event_handler)
