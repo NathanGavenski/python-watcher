@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "watcher-cli"
+version = "0.0.2"
+description = "A watcher for running python code when after every modification"
+readme = {file = "README.md", content-type = "text/markdown"}
+authors = [
+    {name = "NathanGavenski", email = "nathangavenski@gmail.com"},
+]
+license = {text = "MIT"}
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.10",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "watchdog",
+]
+requires-python = ">=3.10"
+
+# BETA-feature "Automatic discovery"
+# Leaving out any information about the package structure to enable automatic discovery. src-layout works out of the box
+# https://setuptools.pypa.io/en/latest/userguide/package_discovery.html#automatic-discovery
+
+[project.urls]
+homepage = "https://github.com/NathanGavenski/python-watcher"
+documentation = "https://github.com/NathanGavenski/python-watcher"
+repository = "https://github.com/NathanGavenski/python-watcher"
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "twine",
+    "build",
+]
+
+[project.scripts]
+watcher = "watcher:main"
