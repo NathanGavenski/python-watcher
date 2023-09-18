@@ -67,7 +67,7 @@ Mostly I was tired off having to tab out from vim just to run pytest/pylint/pyth
 - [x] run pylint
     - [x] to run pylint there has to be a folder to run pylint over
     - [ ] fail with some threshold
-- [ ] Spawn a new process to close if needed (more control over running process)
+- [x] Spawn a new process to close if needed (more control over running process)
 - [ ] Create documentation
 - [x] Create tests
 - [ ] Publish

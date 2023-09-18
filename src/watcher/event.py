@@ -1,12 +1,11 @@
 """Module for EventHandler (deals with event from watchdog)."""
 from argparse import Namespace
+from subprocess import Popen, run
 import time
-import os
 
 from watchdog.events import FileSystemEventHandler, FileSystemEvent
 
 
-# FIXME it should not trigger on github modifications (at least not on .git folder)
 # TODO event from VS Code and vim are different
 class EventHandler(FileSystemEventHandler):
     """Class for handling file system modification events."""
@@ -22,6 +21,7 @@ class EventHandler(FileSystemEventHandler):
             params.lint,
             params.lint_src
         )
+        self.process = None
 
     def on_modified(self, event: FileSystemEvent) -> None:
         """Execute every modification event.
@@ -29,22 +29,39 @@ class EventHandler(FileSystemEventHandler):
         Args:
             event (FileSystemEvent): event from file system.
         """
-        if 'swp' not in event.src_path and self.should_trigger():
-            os.system('clear')
+        if self.should_trigger(event):
+            run('clear', shell=True)
             print(f'Event type: {str(event.event_type).upper()}')
             print(f'Path : {event.src_path}')
             print(f'Running {self.runner}...')
-            os.system(f'{self.command} {self.executable}')
+
+            if self.process is not None:
+                self.process.kill()
+
+            self.process = Popen(f'{self.command} {self.executable}', shell=True)
             self.last_trigger = time.time()
 
-    def should_trigger(self) -> bool:
+    def should_trigger(self, event: FileSystemEvent) -> bool:
         """Test whether it should trigger for the event.
+
+        Args:
+            event (FileSystemEvent): event information.
 
         Returns:
             status (bool): True if it should trigger, False otherwise.
         """
+        # Test whether the timeout is over
         delta = time.time() - self.last_trigger
-        return delta > self.params.time
+        time_criteria = delta > self.params.time
+
+        # Test whether the location should be changed
+        locations = ['.git']
+        location_criteria = not any(map(event.src_path.__contains__, locations))
+
+        file_types = ['swp']
+        type_criteria = not any(map(event.src_path.__contains__, file_types))
+
+        return all([time_criteria, location_criteria, type_criteria])
 
     def get_runner(self, test: bool, lint: bool, file_to_execute: str) -> str:
         """Which name should be displayed when running.

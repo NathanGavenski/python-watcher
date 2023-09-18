@@ -4,6 +4,7 @@ from copy import deepcopy
 from unittest import TestCase
 
 from src.watcher.event import EventHandler
+from watchdog.events import FileSystemEvent
 
 
 class TestWatcher(TestCase):
@@ -56,10 +57,20 @@ class TestWatcher(TestCase):
 
     def test_eventhandler_should_trigger(self) -> None:
         """Test if it should trigget event."""
+        file_event = FileSystemEvent(src_path=".")
+
         params = self.get_params()
         params.time = 0
         event = EventHandler(params)
-        assert event.should_trigger()
+        assert event.should_trigger(file_event)
 
-        event = EventHandler(self.get_params())
-        assert not event.should_trigger()
+        params = self.get_params()
+        params.time = 60
+        event = EventHandler(params)
+        assert not event.should_trigger(file_event)
+
+        params = self.get_params()
+        params.time = 0
+        event = EventHandler(params)
+        file_event = FileSystemEvent(src_path=".git")
+        assert not event.should_trigger(file_event)
