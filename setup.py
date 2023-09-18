@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="watcher-cli",
-    version="0.0.1",
+    version="0.0.2",
     description="A watcher for running python code when after every modification",
     package_dir={"": "src"},
     packages=find_packages(where="src"),
