@@ -18,6 +18,7 @@ class TestWatcher(TestCase):
             test=False,
             lint=False,
             lint_src="src",
+            lint_threshold=None,
             time=1
         )
 
@@ -39,6 +40,12 @@ class TestWatcher(TestCase):
         params.lint = True
         event = EventHandler(params)
         assert event.command == "pylint"
+
+        params = self.get_params()
+        params.lint = True
+        params.lint_threshold = 9
+        event = EventHandler(params)
+        assert event.command == f"pylint --fail-under={params.lint_threshold}"
 
     def test_eventhandler_executable(self) -> None:
         """Test command that is executed."""

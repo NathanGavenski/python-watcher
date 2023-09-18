@@ -4,16 +4,20 @@ Its lightweight since it only has watchdog as a dependency.
 
 ## Parameters for running
 ```
--d or --dir (required): 
+-d or --dir (str, required): 
     Folder you want the watcher to look for changes. Defaults to "."
--f or --file (required): 
+-f or --file (str, required): 
     Script that you want to run after a file is changed (probably you main.py or something similar)
--t or --time (optional):
+-t or --time (int, optional):
     Time delay to run again (good when saving constantly). Defaults to 1.
---test (optional):
+--test (bool, optional):
     If the watcher should run pytest command instead of python. Defaults to False.
---lint (optional):
+--lint (bool, optional):
     If the watcher should run pylint command instead of python. Defaults to False.
+--lint_src (str, optional):
+    where the linter should be run (so it does not run into unwanted files).
+--lint_threshold (float, optional):
+    Threshold for Pylint to fail. Defaults to None (no threshold).
 ```
 
 ## To run
@@ -30,8 +34,8 @@ watcher -f watcher.py
 # watching and executing pytest
 watcher --test
 
-# watching and executing pylint only for "src" directory
-watcher --lint --lint_src src
+# watching and executing pylint only for "src" directory with a threshold with 90%
+watcher --lint --lint_src src --lint_threshold 9
 ```
 
 ## For dependencies all you need to do is run
@@ -66,7 +70,7 @@ Mostly I was tired off having to tab out from vim just to run pytest/pylint/pyth
 - [x] run pytest
 - [x] run pylint
     - [x] to run pylint there has to be a folder to run pylint over
-    - [ ] fail with some threshold
+    - [x] fail with some threshold
 - [x] Spawn a new process to close if needed (more control over running process)
 - [ ] Create documentation
 - [x] Create tests

@@ -6,14 +6,17 @@ import time
 from watchdog.events import FileSystemEventHandler, FileSystemEvent
 
 
-# TODO event from VS Code and vim are different
 class EventHandler(FileSystemEventHandler):
-    """Class for handling file system modification events."""
+    """Class for handling file system modification events.
+
+    Args:
+        params (Namespace, required): parameters from command line.
+    """
 
     def __init__(self, params: Namespace) -> None:
         self.params = params
         self.last_trigger = time.time()
-        self.command = self.get_command(params.test, params.lint)
+        self.command = self.get_command(params.test, params.lint, params.lint_threshold)
         self.runner = self.get_runner(params.test, params.lint, params.file)
         self.executable = self.get_executable(
             params.dir,
@@ -30,7 +33,7 @@ class EventHandler(FileSystemEventHandler):
             event (FileSystemEvent): event from file system.
         """
         if self.should_trigger(event):
-            run('clear', shell=True)
+            run('clear', shell=True, check=False)
             print(f'Event type: {str(event.event_type).upper()}')
             print(f'Path : {event.src_path}')
             print(f'Running {self.runner}...')
@@ -38,8 +41,9 @@ class EventHandler(FileSystemEventHandler):
             if self.process is not None:
                 self.process.kill()
 
-            self.process = Popen(f'{self.command} {self.executable}', shell=True)
-            self.last_trigger = time.time()
+            with Popen(f'{self.command} {self.executable}', shell=True) as process:
+                self.process = process
+                self.last_trigger = time.time()
 
     def should_trigger(self, event: FileSystemEvent) -> bool:
         """Test whether it should trigger for the event.
@@ -80,7 +84,7 @@ class EventHandler(FileSystemEventHandler):
             return "pylint"
         return file_to_execute
 
-    def get_command(self, test: bool, lint: bool) -> str:
+    def get_command(self, test: bool, lint: bool, lint_threshold: float) -> str:
         """Selects which command it should run.
 
         Args:
@@ -93,6 +97,8 @@ class EventHandler(FileSystemEventHandler):
         if test:
             return "pytest"
         if lint:
+            if lint_threshold is not None:
+                return f"pylint --fail-under={lint_threshold}"
             return "pylint"
         return "python"
 

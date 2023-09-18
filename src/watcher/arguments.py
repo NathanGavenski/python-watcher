@@ -26,11 +26,15 @@ def get_args() -> Namespace:
         default=1,
         help='Time delay to run again (good when saving constantly)'
     )
+
+    # PyTest
     parser.add_argument(
         '--test',
         action='store_true',
         help='whether watcher should run pytest'
     )
+
+    # PyLint
     parser.add_argument(
         '--lint',
         action='store_true',
@@ -41,6 +45,12 @@ def get_args() -> Namespace:
         type=str,
         default='src',
         help='where to run pylint'
+    )
+    parser.add_argument(
+        '--lint_threshold',
+        type=float,
+        default=None,
+        help='the threshold for failing Pylint. Defaults to None (no threshold)'
     )
 
     params = parser.parse_args()
