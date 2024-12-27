@@ -62,17 +62,6 @@ Although trivial, there are some uses cases that made me create this package:
 Mostly I was tired off having to tab out from vim just to run pytest/pylint/python on the terminal.
 
 ## Todo
-- [x] create a proper setup
-- [x] make it executable from command line
 - [ ] be able to pass parameters
 - [ ] read parameters from yaml file
-- [x] only watch a single file changes
-- [x] run pytest
-- [x] run pylint
-    - [x] to run pylint there has to be a folder to run pylint over
-    - [x] fail with some threshold
-- [x] Spawn a new process to close if needed (more control over running process)
 - [ ] Create documentation
-- [x] Create tests
-- [ ] Publish
-- [ ] Fix pytest not working on GitHub actions
