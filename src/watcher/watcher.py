@@ -4,8 +4,8 @@ import os
 
 from watchdog.observers import Observer
 
-from watcher.arguments import get_args
-from watcher.event import EventHandler
+from .arguments import get_args
+from .event import EventHandler
 
 
 def setup_observer(params: Namespace, handler: EventHandler) -> Observer:

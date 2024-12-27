@@ -2,8 +2,9 @@
 from argparse import Namespace
 from subprocess import Popen, run
 import time
-
 from watchdog.events import FileSystemEventHandler, FileSystemEvent
+
+from .text_formatting import TerminalColors
 
 
 class EventHandler(FileSystemEventHandler):
@@ -36,14 +37,36 @@ class EventHandler(FileSystemEventHandler):
             run('clear', shell=True, check=False)
             print(f'Event type: {str(event.event_type).upper()}')
             print(f'Path : {event.src_path}')
-            print(f'Running {self.runner}...')
 
             if self.process is not None:
+                prefix = TerminalColors.WARNING.value
+                postfix = TerminalColors.ENDC.value
+                print(f"{prefix}\nPast process is still running")
+                print(f"Killing process: \"{self.process.args}\" (PID:{self.process.pid})")
                 self.process.kill()
+                self.wait_kill_signal()
+                print(f"Killed successfully{postfix}\n")
 
-            with Popen(f'{self.command} {self.executable}', shell=True) as process:
-                self.process = process
-                self.last_trigger = time.time()
+            self.process = Popen(f'{self.command} {self.executable}', shell=True)
+            print(f"New process: \"{self.process.args}\" (PID:{self.process.pid})")
+            self.last_trigger = time.time()
+            print(f'Running {self.runner}')
+            print("Output:")
+
+    def wait_kill_signal(self) -> bool:
+        """Wait for subprocess to be killed.
+
+        Returns:
+            is_killed (bool): True if it is killed.
+        """
+        count = 0
+        while self.process.poll() is None:
+            loading = "." * count + " " * (10 - count)
+            print(f"\rKilling: {loading}", end="\r")
+            count += 1
+            if count > 10:
+                count = 0
+        return True
 
     def should_trigger(self, event: FileSystemEvent) -> bool:
         """Test whether it should trigger for the event.
