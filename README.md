@@ -65,3 +65,7 @@ Mostly I was tired off having to tab out from vim just to run pytest/pylint/pyth
 - [ ] be able to pass parameters
 - [ ] read parameters from yaml file
 - [ ] Create documentation
+- [ ] Safe param to not kill the running process
+- [ ] Change dir to directory
+- [ ] Change file to execute
+- [ ] Find a way to run only failed tests
