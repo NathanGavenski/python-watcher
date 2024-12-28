@@ -1,5 +1,5 @@
 # python-watcher
-I've crated this project to watch over a repo dir and execute a file after modifying anything on that same dir. 
+I've created this project to watch over a repo dir and execute a file after modifying anything on that same dir. 
 Its lightweight since it only has watchdog as a dependency. 
 
 ## Parameters for running
